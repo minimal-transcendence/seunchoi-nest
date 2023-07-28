@@ -9,7 +9,7 @@ RUN npm install
 
 COPY . .
 
-# prisma
+# # prisma
 RUN npx prisma generate
 
 RUN npm run build
@@ -33,8 +33,8 @@ RUN npm install --only-production
 
 # prisma studio
 COPY ./prisma .
+COPY ./run.sh .
 
-# RUN npm run prisma:generate
 RUN rm package*.json
 
-CMD ["node", "dist/main.js"]
+CMD ["sh", "./run.sh"]
