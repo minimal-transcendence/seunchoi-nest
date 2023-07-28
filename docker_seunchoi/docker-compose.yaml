@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  postgresql:
+    build: ./src/postgresql
+    container_name: postgresql
+    image: postgresql
+    restart: always
+    ports:
+      - '5432:5432'
+    networks:
+      - backend_network
+    environment:
+      POSTGRES_PASSWORD: 5150
+    volumes:
+      - postgresql_volume:/var/lib/postgresql/data
+
+  nest_api:
+    build: ./src/nest_api
+    container_name: nest_api
+    image: nest_api
+    depends_on:
+      - postgresql
+    restart: always
+    ports:
+      - '3000:3000'
+      - '5555:5555'
+    networks:
+      - backend_network
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}
+
+networks:
+  backend_network:
+    driver: bridge
+    name: backend_network
+
+volumes:
+  postgresql_volume:
+    name: postgresql_volume
+    driver_opts:
+      type: none
+      device: /Users/seunchoi/app-docker/pgdata
+      o: bind
