@@ -4,12 +4,12 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { UsersService } from 'src/users/users.service';
 import { Request } from 'express';
 import { User } from '@prisma/client';
-import { ConfigService } from '@nestjs/config';
+// import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class JwtRefreshStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
   constructor(
-    private readonly configService: ConfigService,
+    // private readonly configService: ConfigService,
     private readonly usersService: UsersService,
   ) {
     super({
@@ -18,7 +18,8 @@ export class JwtRefreshStrategy extends PassportStrategy(Strategy, 'jwt-refresh'
           return req?.cookies?.refresh_token;
         },
       ]),
-      secretOrKey: configService.get<string>('JWT_REFRESH_TOKEN_SECRET'),
+      // secretOrKey: configService.get<string>('JWT_REFRESH_TOKEN_SECRET'),
+      secretOrKey: process.env.JWT_REFRESH_TOKEN_SECRET,
       passReqToCallback: true
     });
   }

@@ -2,12 +2,12 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
-import { ConfigService } from '@nestjs/config';
+// import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
     constructor(
-        private configService: ConfigService,
+        // private configService: ConfigService,
         private jwtService: JwtService,
         private usersService: UsersService
     ) {}
@@ -25,8 +25,10 @@ export class AuthService {
             id: user.id
         }
         return await this.jwtService.signAsync({id: payload.id}, {
-            secret: this.configService.get<string>('JWT_REFRESH_TOKEN_SECRET'),
-            expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRATION_TIME'),
+            // secret: this.configService.get<string>('JWT_REFRESH_TOKEN_SECRET'),
+            // expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRATION_TIME'),
+            secret: process.env.JWT_REFRESH_TOKEN_SECRET,
+            expiresIn: process.env.JWT_REFRESH_EXPIRATION_TIME,
         });
     }
 
@@ -48,7 +50,8 @@ export class AuthService {
         const decodedRefreshToken = await this.jwtService.verifyAsync(
             refresh_token,
             {
-                secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+                secret: process.env.JWT_REFRESH_TOKEN_SECRET,
+                // secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
             });
     
         // Check if user exists

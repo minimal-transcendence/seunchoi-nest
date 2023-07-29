@@ -37,6 +37,20 @@ services:
       - backend_network
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}?${POSTGRES_SCHEMA}
+      - JWT_ACCESS_TOKEN_SECRET=${JWT_ACCESS_TOKEN_SECRET}
+      - JWT_ACCESS_EXPIRATION_TIME=${JWT_ACCESS_EXPIRATION_TIME}
+      - JWT_REFRESH_TOKEN_SECRET=${JWT_REFRESH_TOKEN_SECRET}
+      - JWT_REFRESH_EXPIRATION_TIME=${JWT_REFRESH_EXPIRATION_TIME}
+
+    # react_web:
+    #   build: ./src/react_web
+    #   container_name: react_web
+    #   image: react_web
+    #   depends_on:
+    #     - nest_api
+    #   restart: always
+    #   ports:
+    #     - '3001:3001'
 
 networks:
   backend_network:
