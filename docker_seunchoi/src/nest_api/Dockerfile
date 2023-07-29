@@ -25,16 +25,13 @@ ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/package*.json .
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/.env .env
-# COPY package*.json ./
+
 RUN npm install --only-production
 
-# prisma studio
-COPY ./prisma .
-COPY ./run.sh .
+# prisma
+COPY ./prisma ./prisma
 
-RUN rm package*.json
-
-CMD ["sh", "./run.sh"]
+CMD ["npm", "run", "start:migrate:prod"]
