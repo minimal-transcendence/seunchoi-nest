@@ -1,36 +1,76 @@
-import { Controller, Get, Next, Post, Body, Req, Res, UseGuards, UnauthorizedException } from '@nestjs/common';
-import { FortyTwoAuthGuard } from './guards/42.guard';
+import { Controller, Get, Query, Req, Res, UseGuards, UnauthorizedException } from '@nestjs/common';
 import { JwtGuard } from './guards/jwt.guard';
-import { NextFunction, Response } from 'express';
+import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import { UsersService } from 'src/users/users.service';
-import { User } from '@prisma/client';
-import { TwoFactorAuthService } from 'src/two-factor-auth/two-factor-auth.service';
 
 @Controller('auth')
 export class AuthController {
     constructor(
         private authService: AuthService,
         private usersService: UsersService,
-        private twoFactorAuthService: TwoFactorAuthService
     ) {}
 
-    @UseGuards(FortyTwoAuthGuard)
-    @Get('login')
-    async getLogin(@Next() next: NextFunction) {
-        next();
-    }
+    // @UseGuards(FortyTwoAuthGuard)
+    // @Get('login')
+    // async getLogin(@Next() next: NextFunction) {
+    //     next();
+    // }
 
-    @UseGuards(FortyTwoAuthGuard)
-    @Get('callback')
-    async getCallback(@Req() req: any, @Res() res: Response) {
-        const user: User = req.user;
+    // @UseGuards(FortyTwoAuthGuard)
+    // @Get('callback')
+    // async getCallback(@Req() req: any, @Res() res: Response) {
+    //     const user: User = req.user;
         
+    //     if (user.is2faEnabled) {
+    //         res.cookie('id', user.id)
+    //         return res.send({
+    //             message: 'finish 2fa to get jwt token'
+    //         });
+    //     }
+
+    //     const access_token = await this.authService.generateAccessToken(user);
+    //     const refresh_token = await this.authService.generateRefreshToken(user);
+
+    //     // hashing refresh token
+    //     const hashedRefreshToken = await this.authService.getHashedRefreshToken(refresh_token);
+    //     // store hashed refresh token
+    //     this.usersService.setRefreshToken(user.id, hashedRefreshToken);
+
+    //     res.setHeader('Authorization', 'Bearer '+ [access_token, refresh_token]);
+    //     res.cookie('access_token', access_token, {
+    //         httpOnly: true,
+    //     });
+    //     res.cookie('refresh_token', refresh_token, {
+    //         httpOnly: true,
+    //     });
+
+    //     return res.send({
+    //         message: 'new jwt generated'
+    //     });
+    // }
+
+    @Get('login')
+    async login(@Query() params: any, @Res() res: Response) {
+        const code = params?.code;
+
+        if (!code) {
+            throw new UnauthorizedException('No code in query string');
+        }
+
+        // get user data from api
+        const apiData = await this.authService.getUserFromApi(code);
+
+        const user = await this.usersService.addNewUser({
+            id: apiData.id,
+            email: apiData.email,
+        });
+
         if (user.is2faEnabled) {
-            res.cookie('id', user.id)
             return res.send({
-                message: 'finish 2fa to get jwt token'
+                message: 'finish 2fa to get jwt token',
+                id: user.id,
             });
         }
 

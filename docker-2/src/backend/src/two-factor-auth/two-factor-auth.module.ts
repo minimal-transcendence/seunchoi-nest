@@ -6,11 +6,13 @@ import { AuthService } from 'src/auth/auth.service';
 import { AuthModule } from 'src/auth/auth.module';
 import { PrismaService } from 'src/prisma.service';
 import { JwtModule } from '@nestjs/jwt';
+import { HttpModule } from '@nestjs/axios';
 // import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     forwardRef(()=>AuthModule),
+    HttpModule,
     UsersModule,
     // JwtModule.registerAsync({
     //   imports: [ConfigModule],

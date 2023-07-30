@@ -17,11 +17,8 @@ FROM nginx:1.24
 
 WORKDIR /app
 
-COPY run.sh /app/run.sh
 COPY default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/build ./build
-
-# CMD ["sh", "run.sh"]
 
 #----------------------------------------#
 
@@ -39,7 +36,7 @@ COPY --from=builder /app/build ./build
 # CMD ["npm", "run", "start:migrate:dev"]
 
 #---------------------____#
-# test
+# # test
 
 # FROM node:18-alpine
 
@@ -51,6 +48,11 @@ COPY --from=builder /app/build ./build
 
 # COPY . .
 
-# RUN npm run build
+# # RUN npm run build
+
+# CMD ["tail", "-f", "/dev/null"]
+
+#test2
+# FROM node:18-alpine
 
 # CMD ["tail", "-f", "/dev/null"]

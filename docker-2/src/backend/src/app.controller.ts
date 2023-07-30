@@ -10,7 +10,7 @@ export class AppController {
   //   return this.appService.getHello();
   // }
 
-  @Get()
+  @Get('message')
   getHello() {
     return {
       message: "Hello! - from nest api"

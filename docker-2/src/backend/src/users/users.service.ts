@@ -19,6 +19,22 @@ export class UsersService {
         return user
     }
 
+    async addNewUser(data: any): Promise<User> {
+        const target = await this.findUserById(data.id);
+        if (target) {
+            return target;
+        }
+
+        const user = await this.prisma.user.create({
+            data: {
+                id: data.id,
+                email: data.email,
+            }
+        })
+
+        return user;
+    }
+
     async getUserIfRefreshTokenMatches(refreshToken: string, userId: number): Promise<User | null>
     {
         const user = await this.findUserById(userId);

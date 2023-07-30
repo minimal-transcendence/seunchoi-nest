@@ -1,63 +1,31 @@
 import { useEffect, useState } from "react";
-import Movies from "../components/Movies";
-import styles from "./Home.module.css";
-import { Link } from "react-router-dom";
 
 function Home() {
-  const [loading, setLoading] = useState(true);
-  const [movies, setMovies] = useState([]);
-  // test - api connection
-  const [api, setAPI] = useState();
-  const getAPI = async () => {
-    const json = await (
-      await fetch(
-        "http://localhost/api"
-      )
-    ).json();
-    setAPI(json);
-  };
-  /*-----------------------*/
-  const getMovies = async () => {
-    const json = await (
-      await fetch(
-        "https://yts.mx/api/v2/list_movies.json?minimum_rating=8.8&sort_by=year"
-      )
-    ).json();
-    setMovies(json.data.movies);
-    setLoading(false);
-  };
-  useEffect(() => {
-    getMovies();
-    // test - api connection
-    getAPI();
-    /*-----------------------*/
-  }, []);
-  return (
-    <div className={styles.container}>
-      {loading ? (
-        <h1 className={styles.loader}>Loading...</h1>
-      ) : (
+    const [message, setMessage] = useState("");
+
+    const getMessage = async () => {
+      const json = await (
+        await fetch(
+          "http://localhost/api/message"
+        )
+      ).json();
+      setMessage(json.message);
+    }
+
+    useEffect(() => {
+      getMessage();
+    }, []);
+    return (
         <div>
-          <h1 className={styles.home}>
-            <Link to="/">{api.message}</Link>
-          </h1>
-          <div className={styles.movies}>
-            {movies.map((movie) => (
-              <Movies
-                key={movie.id}
-                id={movie.id}
-                coverImg={movie.medium_cover_image}
-                title={movie.title}
-                year={movie.year}
-                summary={movie.summary}
-                genres={movie.genres}
-              />
-            ))}
-          </div>
+            <h1>Home PAGE</h1>
+            <h2>this mesasge from API: {message}</h2>
+            <button onClick={() => {
+              window.location.href = 'https://api.intra.42.fr/oauth/authorize/?response_type=code&client_id=u-s4t2ud-7a4d91eaac011bcb231f6a2c475ff7b48445dde9311610e0db488b0f8add6fc3&redirect_uri=http://localhost/callback';
+            }}>
+                LOGIN
+            </button>
         </div>
-      )}
-    </div>
-  );
+    );
 }
 
 export default Home;

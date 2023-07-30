@@ -37,7 +37,7 @@ CMD ["npm", "run", "start:migrate:prod"]
 
 #----------------------------------------#
 
-# dev stage
+# # dev stage
 # FROM node:18-alpine
 
 # WORKDIR /app
@@ -48,4 +48,5 @@ CMD ["npm", "run", "start:migrate:prod"]
 
 # COPY . .
 
-# CMD ["npm", "run", "start:migrate:dev"]
+# # CMD ["npm", "run", "start:migrate:dev"]
+# CMD ["tail", "-f", "/dev/null"]

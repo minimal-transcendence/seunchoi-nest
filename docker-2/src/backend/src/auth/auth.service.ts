@@ -2,15 +2,57 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
-// import { ConfigService } from '@nestjs/config';
+import { lastValueFrom } from 'rxjs';
+import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class AuthService {
     constructor(
         // private configService: ConfigService,
         private jwtService: JwtService,
-        private usersService: UsersService
+        private usersService: UsersService,
+        private httpService: HttpService,
     ) {}
+
+    async getApiAccessToken(code: string): Promise<string> {
+        const req = this.httpService.post("https://api.intra.42.fr/oauth/token", {
+            grant_type: "authorization_code",
+            code: code,
+            client_id: "u-s4t2ud-7a4d91eaac011bcb231f6a2c475ff7b48445dde9311610e0db488b0f8add6fc3",
+            client_secret: "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",
+            redirect_uri: "http://localhost/callback",
+            scope: "public",
+        })
+
+        const { data } = await lastValueFrom(req);
+
+        const access_token = data.access_token;
+
+        return access_token;
+    }
+
+    async getUserFromApi(code: string): Promise<any> {
+        const tokenReq = this.httpService.post("https://api.intra.42.fr/oauth/token", {
+            grant_type: "authorization_code",
+            code: code,
+            client_id: "u-s4t2ud-7a4d91eaac011bcb231f6a2c475ff7b48445dde9311610e0db488b0f8add6fc3",
+            client_secret: "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",
+            redirect_uri: "http://localhost/callback",
+            scope: "public",
+        })
+
+        const tokenData = await lastValueFrom(tokenReq);
+
+        const access_token = tokenData.data.access_token;
+
+        const userReq = this.httpService.get('https://api.intra.42.fr/v2/me', {
+            headers: { Authorization: `Bearer ${access_token}` },
+        });
+
+        const userData = await lastValueFrom(userReq);
+
+        return userData.data;
+    }
 
     async generateAccessToken(user: any): Promise<string> {
         const payload = {
