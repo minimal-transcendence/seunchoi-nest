@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Req, Res, UseGuards, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Post, Query, Req, Res, UseGuards, UnauthorizedException } from '@nestjs/common';
 import { JwtGuard } from './guards/jwt.guard';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
@@ -110,8 +110,8 @@ export class AuthController {
     }
 
     @UseGuards(JwtRefreshGuard)
-    // @Post('logout')
-    @Get('logout')
+    @Post('logout')
+    // @Get('logout')
     async logout(@Req() req: any, @Res() res: Response): Promise<any> {
         await this.usersService.removeRefreshToken(req.user.id);
         res.clearCookie('access_token');
