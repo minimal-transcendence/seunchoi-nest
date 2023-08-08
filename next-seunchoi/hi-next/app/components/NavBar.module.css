@@ -1,0 +1,62 @@
+.user__list {
+    position: absolute;
+    width: 83px;
+    height: 40px;
+    left: 1329px;
+    top: 30px;
+    white-space: nowrap;
+
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 40px;
+    /* identical to box height, or 167% */
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #000000;
+}
+
+.my__page {
+    position: absolute;
+    width: 68px;
+    height: 40px;
+    left: 1451px;
+    top: 30px;
+    white-space: nowrap;
+
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 40px;
+    /* identical to box height, or 167% */
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #000000;
+}
+
+.logout {
+    position: absolute;
+    width: 83px;
+    height: 40px;
+    left: 1558px;
+    top: 30px;
+    white-space: nowrap;
+
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 40px;
+    /* identical to box height, or 167% */
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #000000;
+}

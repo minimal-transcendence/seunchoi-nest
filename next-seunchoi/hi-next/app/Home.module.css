@@ -1,0 +1,47 @@
+.home {
+    position: relative;
+    width: 2150px;
+    height: 1529px;
+
+    background: #FFFFFF;
+}
+
+.logo {
+    position: absolute;
+    width: 59px;
+    height: 59px;
+    left: 162px;
+    top: 20px;
+}
+
+.line__2 {
+    position: absolute;
+    width: 2150px;
+    height: 0px;
+    left: 0px;
+    top: 93px;
+
+    border: 1px solid #000000;
+}
+
+.line__3 {
+    position: absolute;
+    width: 1436px;
+    height: 0px;
+    left: 620px;
+    top: 93px;
+
+    border: 1px solid #000000;
+    transform: rotate(90deg);
+}
+
+.line__4 {
+    position: absolute;
+    width: 1436px;
+    height: 0px;
+    left: 136px;
+    top: 93px;
+
+    border: 1px solid #000000;
+    transform: rotate(90deg);
+}
