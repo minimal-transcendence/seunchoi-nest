@@ -1,0 +1,48 @@
+.item {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    padding: 20px 24px;
+    padding-right: 48px;
+    cursor: pointer;
+    border-top: 4px solid #fff;
+    border-bottom: 4px solid #fff;
+  
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    /* grid-template-rows: 1fr 1fr 1fr; */
+    column-gap: 24px;
+    row-gap: 32px;
+    align-items: center;
+  }
+
+  .open {
+    border-top: 4px solid #087f5b;
+  }
+
+  .number {
+    font-size: 24px;
+    font-weight: 500;
+    color: #ced4da;
+  }
+
+  .icon {
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  .content__box {
+    grid-column: 2 / -1;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    padding-bottom: 16px;
+    line-height: 1.6;
+  }
+  
+  .content__box ul {
+    color: #868e96;
+    margin-left: 16px;
+    margin-top: 161px;
+  
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 12px;
+  }

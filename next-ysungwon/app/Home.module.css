@@ -1,0 +1,96 @@
+.main {
+    margin-top: 2.4rem;
+    height: calc(100vh - 7.2rem - 3 * 2.4rem);
+    display: flex;
+    gap: 2.4rem;
+    justify-content: center;
+}
+
+.error {
+    text-align: center;
+    font-size: 2rem;
+    padding: 4.8rem;
+}
+
+.box {
+    width: 42rem;
+    max-width: 42rem;
+    background-color: var(--color-background-500);
+    border-radius: 0.9rem;
+    /* overflow: scroll; */
+    overflow: none;
+    position: relative;
+  }
+
+.box-center {
+    width: 52rem;
+    max-width: 52rem;
+    background-color: var(--color-background-500);
+    border-radius: 0.9rem;
+    /* overflow: scroll; */
+    overflow: none;
+    position: relative;
+  }
+
+.summary {
+    padding: 2.2rem 3.2rem 1.8rem 3.2rem;
+    border-radius: 0.9rem;
+    background-color: var(--color-background-100);
+    box-shadow: 0 1.2rem 2.4rem rgba(0, 0, 0, 0.2);
+}
+
+.list {
+    list-style: none;
+    padding: 0.8rem 0;
+    /* overflow: scroll; */
+    overflow: none;
+  }
+
+  .list__watched {
+    height: calc(100% - 9rem);
+  }
+  
+  .list li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 4rem 4fr 1fr;
+    grid-template-rows: 1fr;
+    column-gap: 0.4rem;
+    font-size: 1.6rem;
+    align-items: center;
+  
+    padding: 1.6rem 3.2rem;
+    border-bottom: 1px solid var(--color-background-100);
+  }
+  
+  .list.list__rooms li,
+  .list.list__users li {
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .list.list__rooms li:hover,
+  .list.list__users li:hover {
+    background-color: var(--color-background-100);
+  }
+  
+  .list img {
+    width: 100%;
+    grid-row: 1 / -1;
+  }
+  
+  .list h3 {
+    width: 100%;
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+    font-size: 1.8rem;
+  }
+  
+  .list div {
+    /* display: flex; */
+    align-items: center;
+    /* grid-row: 2/ 3; */
+    grid-column: 2 / 3;
+    gap: 0.4rem;
+    font-size: 1rem;
+  }
