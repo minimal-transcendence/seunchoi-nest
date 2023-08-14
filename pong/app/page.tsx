@@ -1,6 +1,7 @@
 'use client'
 
-import { useRef, useState, useEffect, MutableRefObject } from "react"
+import { useRef, useEffect, RefObject } from "react"
+import styles from "./Pong.module.css"
 
 export default function Pong() {
 
@@ -8,18 +9,19 @@ export default function Pong() {
   // const contextRef = useRef(null);
   // const [canvasTag, setCanvasTag] = useState([]);
 
-
-
   useEffect(() => {
     // Initialize Canvas
     const canvas: any = canvasRef.current;
-    canvas.width = window.innerWidth * 0.5;
-    canvas.height = window.innerHeight;
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+    // canvas.width = window.innerWidth;
+    // canvas.height = window.innerHeight;
+    // 해상도(사이즈)가 window에 맞게 설정되면 게임에 영향이 있을 수 있음.
+    // 상수를 할당해야 하나? 화면비를 맞춰야 하나?
     const context = canvas.getContext("2d");
 
-    let x = canvas.width / 2;
-    let y = canvas.height - 30;
-
+    /*-----------------------------------------------------*/
+    // Initialize Context
     // Paddle
     let paddleHeight = 10;
     let paddleWidth = 50;
@@ -51,7 +53,7 @@ export default function Pong() {
         ballX += speedX;
       }
 
-      // 소켓 이벤트
+      // todo - 소켓 이벤트
       // socket.emit("ballMove", {
       //   ballX,
       //   ballY,
@@ -171,59 +173,14 @@ export default function Pong() {
     }
 
     /*-----------------------------------------------------*/
-
-    
-
-    // setCanvasTag(canvas);
-    // setInterval(() => {
-    //   context.clearRect(0, 0, canvas.width, canvas.height);
-    //   // Canvas Background
-    //   context.fillStyle = "black";
-    //   context.fillRect(0, 0, canvas.width, canvas.height);
-
-    //   // Paddle Color
-    //   context.fillStyle = "white";
-
-    //   // Bottom Paddle
-    //   context.fillRect(paddleX[0], canvas.height - 20, paddleWidth, paddleHeight);
-
-    //   // Top Paddle
-    //   context.fillRect(paddleX[1], 10, paddleWidth, paddleHeight);
-
-    //   // Dashed Center Line
-    //   context.beginPath();
-    //   context.setLineDash([4]);
-    //   context.moveTo(0, canvas.height / 2);
-    //   context.lineTo(canvas.width, canvas.height / 2);
-    //   context.strokeStyle = "grey";
-    //   context.stroke();
-
-    //   // Ball
-    //   context.beginPath();
-    //   context.arc(ballX, ballY, ballRadius, 2 * Math.PI, false);
-    //   context.fillStyle = "white";
-    //   context.fill();
-
-    //   // context.beginPath();
-    //   // context.arc(x, y, 20, 0, Math.PI * 2);
-    //   // context.fillStyle = "green";
-    //   // context.fill();
-    //   // context.closePath();
-
-    //   x += speedX;
-    //   y += speedY;
-    // }, 60); // 인터벌 속도 조정 - 프레임?
     setInterval(draw, 10);
-  }, [canvasRef])
+  }, [])
 
   // console.log("canvasTag :", canvasTag);
 
   return (
-    // <main className="flex min-h-screen flex-col items-center justify-between p-24">
-    <main>
-      <div>
-        <canvas ref={canvasRef}/>
-      </div>
-    </main>
+    <div>
+      <canvas className={styles.pong} ref={canvasRef}/>
+    </div>
   )
 }
